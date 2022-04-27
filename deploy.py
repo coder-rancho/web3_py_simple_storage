@@ -1,7 +1,10 @@
 from solcx import compile_standard, install_solc
 import json
 from web3 import Web3
+import os
+from dotenv import load_dotenv
 
+load_dotenv()
 
 # Compiling the solidity code.
 
@@ -42,12 +45,14 @@ abi = json.loads(
 )["output"]["abi"]
 
 # Connect to blockchain
-# Ganache chain
-w3 = Web3(Web3.HTTPProvider("http://127.0.0.1:8545"))
+ganache_chain_address = "http://127.0.0.1:8545"
+infura_chain_address = os.getenv("RINKEBY_RPC_URL")
+w3 = Web3(Web3.HTTPProvider(infura_chain_address))
 # chain_id = 1337
 chain_id = w3.eth.chain_id
-my_address = "0x4Fa1d196FF7D9d4792e917Af51416F526128Ab2f"
-private_key = "0x2d1c03d1c7ea120de052faeb672f506e08f6333da0ca21fbaf5a7c1987f240dc"
+my_address = os.getenv("MY_ADDRESS")
+private_key = os.getenv("PRIVATE_KEY")
+
 
 
 # Create contract in python
